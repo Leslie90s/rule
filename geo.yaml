@@ -1,0 +1,166 @@
+# 订阅
+proxy-providers:
+  Airport1:
+    url: "https://sub.zeex.us.to/hello"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 3600
+    proxy: 🎯 Direct
+
+# 节点信息
+proxies:
+  - {name: 🎯 Direct, type: direct}
+  - {name: ⛔ Reject, type: reject}
+
+# 全局配置 
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+# interface-name: enp6s18
+log-level: warning
+find-process-mode: 'off'
+global-client-fingerprint: chrome
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+#geo文件
+geo-auto-update: false
+geo-update-interval: 24
+geodata-mode: false
+geox-url:
+  geoip: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb"
+
+# 为防止使用插件朋友遇到面板问题，我注释掉了此模块。
+# 跑裸核朋友自行删除注释即可，使用nikki仅内核的ui路径改为/etc/nikki/run/ui
+#external-controller: 0.0.0.0:9090
+#secret: ""
+#external-ui: "/etc/mihomo/ui"
+#external-ui-name: zashboard
+#external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+# 嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - "+.v2ex.com"
+  skip-domain:
+    - "+.baidu.com"
+
+# 入站  
+tun:
+  enable: true
+  # system/gvisor/mixed
+  stack: mixed
+  dns-hijack: ["any:53", "tcp://any:53"]
+  #使用nikki，混入全部不修改的情况，开启接口指定为nikki
+  #使用仅内核自行修改下面三项为true
+  #device: nikki
+  auto-route: false
+  auto-redirect: false
+  auto-detect-interface: false
+
+# DNS模块
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - GEOSITE:private
+    - GEOSITE:cn
+    - "*"
+    - +.lan
+    - +.local
+    - time.*.com
+    - ntp.*.com
+    - +.market.xiaomi.com
+  default-nameserver:
+    - 223.5.5.5
+  proxy-server-nameserver:
+    - 223.5.5.5
+  nameserver:
+    - 223.5.5.5
+ 
+proxy-groups:
+  - {name: 💖 China, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
+  - {name: 💻️ Network, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
+  - {name: 🪁 Google, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
+  - {name: ✈️ Telegram, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
+  - {name: 📽️ Media, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
+  - {name: 🌎️ World, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
+  - {name: 🐳 Other, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
+
+rules:
+
+- RULE-SET,d1,💖 China
+- GEOSITE,private,💖 China
+- GEOSITE,cn,💖 China
+- GEOSITE,oracle,💖 China
+- GEOSITE,epicgames,💖 China
+- GEOIP,private,💖 China,no-resolve
+- GEOIP,cn,💖 China
+
+
+- RULE-SET,p1,💻️ Network
+- GEOSITE,openai,💻️ Network
+- GEOSITE,github,💻️ Network
+- GEOSITE,cloudflare,💻️ Network
+
+- GEOSITE,google,🪁 Google
+- GEOIP,google,🪁 Google
+
+- GEOSITE,microsoft,💖 China
+
+- GEOSITE,telegram,✈️ Telegram
+- GEOIP,telegram,✈️ Telegram
+
+- GEOSITE,tiktok,📽️ Media
+- GEOSITE,x,📽️ Media
+- GEOSITE,meta,📽️ Media
+- GEOIP,twitter,📽️ Media
+
+- RULE-SET,p2,🌎️ World
+- GEOSITE,geolocation-!cn,🌎️ World
+- GEOSITE,category-porn,🌎️ World
+- GEOSITE,tld-!cn,🌎️ World
+
+- MATCH,🐳 Other
+
+# 规则集
+## type：可选http/file/inline  behavior：可选domain/ipcidr/classical format：可选yaml/text/mrs
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: text}
+  class: &class {type: http, interval: 86400, behavior: classical, format: text}
+
+rule-providers: 
+
+  d1: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/d1.list"}
+  p1: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/p1.list"}
+  p2: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/p2.list"}
