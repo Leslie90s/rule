@@ -113,7 +113,7 @@ dns:
     geoip: true
     geoip-code: CN
     geosite:
-      - gfw
+     - gfw
 
 proxy-groups:
   - {name: 💖 China, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
@@ -127,14 +127,6 @@ proxy-groups:
 rules:
 - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
 
-- RULE-SET,d1,💖 China
-- GEOSITE,private,💖 China
-- GEOSITE,cn,💖 China
-- GEOSITE,oracle,💖 China
-- GEOSITE,epicgames,💖 China
-- GEOIP,private,💖 China,no-resolve
-- GEOIP,cn,💖 China
-
 - RULE-SET,p1,💻️ Network
 - GEOSITE,openai,💻️ Network
 - GEOSITE,github,💻️ Network
@@ -143,7 +135,14 @@ rules:
 - GEOSITE,google,🪁 Google
 - GEOIP,google,🪁 Google
 
+- RULE-SET,d1,💖 China
+- GEOSITE,private,💖 China
+- GEOSITE,cn,💖 China
+- GEOSITE,oracle,💖 China
+- GEOSITE,epicgames,💖 China
 - GEOSITE,microsoft,💖 China
+- GEOIP,private,💖 China,no-resolve
+- GEOIP,cn,💖 China
 
 - GEOSITE,telegram,✈️ Telegram
 - GEOIP,telegram,✈️ Telegram
