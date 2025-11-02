@@ -94,19 +94,27 @@ dns:
   fake-ip-filter:
     - GEOSITE:private
     - GEOSITE:cn
-    - "*"
     - +.lan
-    - +.local
+    - localhost.ptlogin2.qq.com
     - time.*.com
     - ntp.*.com
     - +.market.xiaomi.com
   default-nameserver:
-    - 223.5.5.5
+    - tls://223.5.5.5
   proxy-server-nameserver:
-    - 223.5.5.5
+    - https://dns.alidns.com/dns-query
   nameserver:
+    - https://dns.alidns.com/dns-query
     - 223.5.5.5
- 
+  fallback:
+    - tls://8.8.8.8
+    - https://dns.google/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    geosite:
+      - gfw
+
 proxy-groups:
   - {name: 💖 China, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
   - {name: 💻️ Network, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
@@ -117,6 +125,7 @@ proxy-groups:
   - {name: 🐳 Other, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
 
 rules:
+- AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
 
 - RULE-SET,d1,💖 China
 - GEOSITE,private,💖 China
@@ -125,7 +134,6 @@ rules:
 - GEOSITE,epicgames,💖 China
 - GEOIP,private,💖 China,no-resolve
 - GEOIP,cn,💖 China
-
 
 - RULE-SET,p1,💻️ Network
 - GEOSITE,openai,💻️ Network
@@ -147,7 +155,6 @@ rules:
 
 - RULE-SET,p2,🌎️ World
 - GEOSITE,geolocation-!cn,🌎️ World
-- GEOSITE,category-porn,🌎️ World
 - GEOSITE,tld-!cn,🌎️ World
 
 - MATCH,🐳 Other
@@ -161,6 +168,6 @@ rule-anchor:
 
 rule-providers: 
 
-  d1: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/d1.list"}
-  p1: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/p1.list"}
-  p2: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/p2.list"}
+  d1: { <<: *domain, url: "https://fastly.jsdelivr.net/gh/Leslie90s/rule@main/d1.list"}
+  p1: { <<: *domain, url: "https://fastly.jsdelivr.net/gh/Leslie90s/rule@main/p1.list"}
+  p2: { <<: *domain, url: "https://fastly.jsdelivr.net/gh/Leslie90s/rule@main/p2.list"}
