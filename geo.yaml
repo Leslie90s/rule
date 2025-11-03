@@ -98,19 +98,19 @@ fake-ip-filter:
   - 'ntp.*.com'
   - '+.msftconnecttest.com'
   - '+.msftncsi.com'
-  default-nameserver:
-    - https://dns.alidns.com/dns-query
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
-  nameserver:
-    - https://dns.alidns.com/dns-query
-  fallback:
-    - https://dns.google/dns-query
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    geosite:
-      - gfw
+default-nameserver:
+  - https://dns.alidns.com/dns-query
+proxy-server-nameserver:
+  - https://dns.alidns.com/dns-query
+nameserver:
+  - https://dns.alidns.com/dns-query
+fallback:
+  - https://dns.google/dns-query
+fallback-filter:
+  geoip: true
+  geoip-code: CN
+  geosite:
+    - gfw
     
 proxy-groups:
   - {name: 💖 China, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
