@@ -1,6 +1,6 @@
 proxy-providers:
   Airport1:
-    url: "https://sub.zeex.us.to/hello"
+    url: "https://sub.zeex.us.to/hello?b64"
     type: http
     interval: 86400
     health-check:
@@ -78,12 +78,12 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    - GEOSITE:private
-    - GEOSITE:cn
+    - "GEOSITE:private"
+    - "GEOSITE:cn"
     - "time.*.com"
     - "ntp.*.com"
     - "+.msftconnecttest.com"
-    - '+.msftncsi.com'
+    - "+.msftncsi.com"
   default-nameserver:
     - 223.5.5.5
   proxy-server-nameserver:
@@ -144,7 +144,6 @@ rules:
 
 rule-anchor:
   domain: &domain {type: http, interval: 86400, behavior: domain, format: text}
-
 rule-providers: 
   d1: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/d1.list"}
   p1: { <<: *domain, url: "https://raw.githubusercontent.com/Leslie90s/rule/refs/heads/main/p1.list"}
