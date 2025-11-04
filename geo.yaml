@@ -71,34 +71,28 @@ tun:
 
 dns:
   enable: true
+  cache-algorithm: arc
   listen: 0.0.0.0:1053
   ipv6: false
-  respect-rules: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    - "geosite:private"
-    - "geosite:cn"
     - "time.*.com"
     - "ntp.*.com"
     - "+.msftconnecttest.com"
     - "+.msftncsi.com"
   default-nameserver:
     - 223.5.5.5
+  nameserver-policy:
+    "geosite:cn,private":
+      - https://dns.alidns.com/dns-query
+    "geosite:geolocation-!cn":
+      - tls://8.8.8.8
   nameserver:
     - https://dns.alidns.com/dns-query
     - 223.5.5.5
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
-  fallback:
-    - tls://8.8.8.8
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    geosite:
-      - gfw
-
+    
 proxy-groups:
   - {name: 💖 China, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
   - {name: 💻️ Network, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
@@ -109,7 +103,7 @@ proxy-groups:
   - {name: 🐳 Other, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
 
 rules:
-- AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,gfw)),⛔ Reject
+- AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,geolocation-!cn)),⛔ Reject
 
 - GEOSITE,openai,💻️ Network
 - GEOSITE,github,💻️ Network
