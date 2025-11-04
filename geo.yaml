@@ -73,7 +73,7 @@ dns:
   enable: true
   listen: 0.0.0.0:1053
   ipv6: false
-  respect-rules: true
+  respect-rules: false
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
@@ -86,8 +86,6 @@ dns:
     - "+.msftncsi.com"
   default-nameserver:
     - 223.5.5.5
-  proxy-server-nameserver:
-    - https://dns.alidns.com/dns-query
   nameserver:
     - https://dns.alidns.com/dns-query
     - 223.5.5.5
