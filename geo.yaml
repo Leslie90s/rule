@@ -32,11 +32,11 @@ profile:
   store-selected: true
   store-fake-ip: true
 
-# external-controller: 0.0.0.0:9090
-# secret: ""
-# external-ui: ui
-# external-ui-name: zashboard
-# external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: ui
+external-ui-name: zashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 geo-auto-update: false
 geo-update-interval: 24
@@ -79,16 +79,16 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter-mode: blacklist
   fake-ip-filter:
-    - "geosite:private,cn"
+    - "geosite:private,cn,apple,microsoft"
+    - sub.zeex.us.to
     - "time.*.com"
     - "ntp.*.com"
-    - "+.msftconnecttest.com"
-    - "+.msftncsi.com"
   default-nameserver:
     - 223.5.5.5
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
   nameserver-policy:
+    'sub.zeex.us.to': '223.5.5.5'
     "geosite:private,cn":
       - https://dns.alidns.com/dns-query
     "geosite:geolocation-!cn":
