@@ -117,6 +117,7 @@ rules:
 - GEOSITE,google,🪁 Google
 - GEOIP,google,🪁 Google
 
+- DOMAIN-SUFFIX,sub.zeex.us.to,💖 China
 - RULE-SET,d1,💖 China
 - GEOSITE,private,💖 China
 - GEOSITE,cn,💖 China
