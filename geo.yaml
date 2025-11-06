@@ -74,15 +74,16 @@ dns:
   cache-algorithm: arc
   listen: 0.0.0.0:1053
   ipv6: false
-  respect-rules: true
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  fake-ip-filter-mode: blacklist
-  fake-ip-filter:
-    - "geosite:private,cn,apple,microsoft"
-    - sub.zeex.us.to
-    - "time.*.com"
-    - "ntp.*.com"
+  enhanced-mode: redir-host
+#  respect-rules: true
+#  enhanced-mode: fake-ip
+#  fake-ip-range: 198.18.0.1/16
+#  fake-ip-filter-mode: blacklist
+#  fake-ip-filter:
+#    - "geosite:private,cn,apple,microsoft"
+#    - sub.zeex.us.to
+#    - "time.*.com"
+#    - "ntp.*.com"
   default-nameserver:
     - 223.5.5.5
   proxy-server-nameserver:
@@ -96,6 +97,7 @@ dns:
   nameserver:
     - https://dns.alidns.com/dns-query
     - 223.5.5.5
+    - tls://8.8.8.8
     
 proxy-groups:
   - {name: 💖 China, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
@@ -107,7 +109,7 @@ proxy-groups:
   - {name: 🐳 Other, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
 
 rules:
-- AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,geolocation-!cn)),⛔ Reject
+- AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),⛔ Reject
 
 - GEOSITE,openai,💻️ Network
 - GEOSITE,github,💻️ Network
