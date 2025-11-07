@@ -74,8 +74,8 @@ dns:
   cache-algorithm: arc
   listen: 0.0.0.0:1053
   ipv6: false
-  enhanced-mode: redir-host
   respect-rules: true
+  enhanced-mode: redir-host
 #  enhanced-mode: fake-ip
 #  fake-ip-range: 198.18.0.1/16
 #  fake-ip-filter-mode: blacklist
