@@ -63,7 +63,7 @@ sniffer:
 
 tun:
   enable: true
-  stack: mixed
+  stack: system
   dns-hijack: ["any:53", "tcp://any:53"]
   auto-route: true
   auto-redirect: true
