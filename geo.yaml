@@ -110,6 +110,7 @@ proxy-groups:
 rules:
 - AND,((NETWORK,UDP),(DST-PORT,443),(GEOSITE,youtube)),⛔ Reject
 
+- GEOSITE,sb,💻️ Network
 - GEOSITE,openai,💻️ Network
 - GEOSITE,github,💻️ Network
 - GEOSITE,cloudflare,💻️ Network
