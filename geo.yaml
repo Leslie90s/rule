@@ -1,13 +1,12 @@
 proxy-providers:
   Airport1:
-    url: "https://sub.zeex.us.to/hello?b64"
+    url: "https://sub.zeex.us.to/hello?clash"
     type: http
 #     interval: 86400
     health-check:
       enable: true
       url: https://www.gstatic.com/generate_204
       interval: 3600
-    proxy: 🎯 Direct
 
 proxies:
   - {name: 🎯 Direct, type: direct}
