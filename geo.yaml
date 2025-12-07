@@ -7,11 +7,11 @@ proxy-providers:
       enable: true
       url: https://www.gstatic.com/generate_204
       interval: 3600
-      proxy: DIRECT
+      proxy: 🎯 Direct
 
 proxies:
-  - {name: 🎯 Direct, type: DIRECT}
-  - {name: ⛔ Reject, type: REJECT}
+  - {name: 🎯 Direct, type: direct}
+  - {name: ⛔ Reject, type: reject}
 
 port: 7890
 socks-port: 7891
