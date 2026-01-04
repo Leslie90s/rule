@@ -2,12 +2,10 @@ proxy-providers:
   Airport1:
     url: "https://sub.zeex.us.to/hello?clash"
     type: http
-#     interval: 86400
     health-check:
       enable: true
       url: https://www.gstatic.com/generate_204
       interval: 3600
-      proxy: 🎯 Direct
 
 proxies:
   - {name: 🎯 Direct, type: direct}
@@ -72,15 +70,15 @@ tun:
 dns:
   enable: true
   cache-algorithm: arc
-  listen: 0.0.0.0:1053
   ipv6: false
-  respect-rules: true
   enhanced-mode: redir-host
   default-nameserver:
     - 223.5.5.5
   proxy-server-nameserver:
     - https://dns.alidns.com/dns-query
   nameserver-policy:
+    "sub.zeex.us.to":
+      - https://dns.alidns.com/dns-query
     "geosite:private,cn":
       - https://dns.alidns.com/dns-query
     "geosite:geolocation-!cn":
@@ -99,6 +97,8 @@ proxy-groups:
   - {name: 🐳 Other, type: select,use: [Airport1],proxies: ["🎯 Direct","⛔ Reject"]}
 
 rules:
+- DOMAIN-SUFFIX,sub.zeex.us.to,🎯 Direct
+
 - GEOSITE,sb,💻️ Network
 - GEOSITE,openai,💻️ Network
 - GEOSITE,github,💻️ Network
